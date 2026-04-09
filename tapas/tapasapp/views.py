@@ -8,6 +8,7 @@ def better_menu(request):
     dish_objects = Dish.objects.all()
     return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})
 
+# Creating Data Records (Code Perspective)
 def add_menu(request):
     if(request.method=="POST"):
         dishname = request.POST.get('dname')
