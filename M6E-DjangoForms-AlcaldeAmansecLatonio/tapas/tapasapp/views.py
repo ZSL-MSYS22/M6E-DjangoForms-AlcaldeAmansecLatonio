@@ -13,14 +13,15 @@ obtained from another source, it has been clearly noted with citations in the
 comments of our program.'''
 
 from django.shortcuts import render, redirect, get_object_or_404
-# from .models import Dish 
 from .models import Account 
+from django.contrib import messages
+# https://docs.djangoproject.com/en/6.0/ref/contrib/messages/
 
 # Create your views here.
 
 
 def better_menu(request):
-    account_info = Accounts.objects.all()
+    account_info = Account.objects.all()
     return render(request, 'tapasapp/better_list.html', {'account_info':account_info})
 
     '''dish_objects = Dish.objects.all()
@@ -29,11 +30,17 @@ def better_menu(request):
 # Creating Data Records (Code Perspective)
 def add_menu(request):
     if(request.method=="POST"):
-        dishname = request.POST.get('dname') 
-        cooktime = request.POST.get('ctime')
-        # dname is from the id of the HTML tag
-        # user input is passed into variable "dishname"
-        return redirect('better_menu')
+        username = request.POST.get('username') 
+        password = request.POST.get('password')
+        usernameCheck = get_object_or_404(Account, username=username)
+        passwordCheck = get_object_or_404(Account, password=passoword)
+    
+        # if username == usernameCheck and password == passwordCheck:
+        #     return redirect('better_menu')
+        # else:
+        #     messages.error(request, 'Invalid Login')
+        #     return render(request, 'tapasapp/add_menu.html')
+
     else:
         return render(request, 'tapasapp/add_menu.html')
 
