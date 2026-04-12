@@ -28,7 +28,7 @@ def better_menu(request):
     return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})'''
 
 # Creating Data Records (Code Perspective)
-def add_menu(request):
+def login(request):
     if(request.method=="POST"):
         username = request.POST.get('username') 
         password = request.POST.get('password')
@@ -43,7 +43,7 @@ def add_menu(request):
             return redirect('error_page')
 
     else:
-        return render(request, 'tapasapp/add_menu.html')
+        return render(request, 'tapasapp/login_page.html')
 
 def view_detail(request, pk):
     d = get_object_or_404(Dish, pk=pk)
