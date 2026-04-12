@@ -24,34 +24,38 @@ def better_menu(request):
     account_info = Account.objects.all()
     return render(request, 'tapasapp/better_list.html', {'account_info':account_info})
 
-    '''dish_objects = Dish.objects.all()
-    return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})'''
-
 # Creating Data Records (Code Perspective)
-def add_menu(request):
+def login(request):
     if(request.method=="POST"):
         username = request.POST.get('username') 
         password = request.POST.get('password')
-        usernameCheck = get_object_or_404(Account, username=username)
-        passwordCheck = get_object_or_404(Account, password=passoword)
-    
-        # if username == usernameCheck and password == passwordCheck:
-        #     return redirect('better_menu')
-        # else:
-        #     messages.error(request, 'Invalid Login')
-        #     return render(request, 'tapasapp/add_menu.html')
+
+        account = Account.objects.filter(username=username).first()
+        # Returns the first object matched by the queryset, or None if there is no matching object
+        # https://docs.djangoproject.com/en/6.0/ref/models/querysets/
+        
+        if account != None and password == account.password:
+            return redirect('better_menu')
+        else:
+            messages.error(request, 'Invalid Login')
+            return render(request, 'tapasapp/login_page.html')
 
     else:
-        return render(request, 'tapasapp/add_menu.html')
+        return render(request, 'tapasapp/login_page.html')
 
-    '''if(request.method=="POST"):
-        dishname = request.POST.get('dname')
-        cooktime = request.POST.get('ctime')
-        preptime = request.POST.get('ptime')
-        Dish.objects.create(name=dishname, cook_time=cooktime, prep_time=preptime)
-        return redirect('better_menu')
+def sign_up(request):
+    if(request.method=="POST"):
+        username = request.POST.get('username') 
+        password = request.POST.get('password')
+
+        account = Account.objects.filter(username=username).first()
+
+        if account != None:
+            messages.error(request, 'Account already exists')
+            return render(request, 'tapasapp/sign_up_page.html')
+
     else:
-        return render(request, 'tapasapp/add_menu.html')'''
+        return render(request, 'tapasapp/sign_up_page.html')
 
 def view_detail(request, pk):
     d = get_object_or_404(Dish, pk=pk)

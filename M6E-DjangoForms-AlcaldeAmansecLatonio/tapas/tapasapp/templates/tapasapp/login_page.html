@@ -1,0 +1,78 @@
+<!-- Johann Miguel S. Alcalde, 240150 ; Samantha Louise F. Amansec, 230286 ; Zale Sebastian S. Latonio, 242494
+
+We hereby attest to the truth of the following facts:
+
+We have not discussed the Python code in our program with anyone
+other than my instructor or the teaching assistants assigned to this course.
+
+We have not used Python code obtained from another student, or
+any other unauthorized source, whether modified or unmodified.
+
+If any Python code or documentation used in our program was
+obtained from another source, it has been clearly noted with citations in the
+comments of our program.-->
+
+{% extends 'tapasapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-8">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title"> Type in User Details:</h5>
+        </div>
+        <div class="card-body">
+
+            <form method="POST" action="{% url 'login' %}">{% csrf_token %}
+            <!-- Form action redirects to url ‘add_menu’  -->
+            
+                <!-- 4.a.ii 
+                This login page should contain a form that prompts 
+                the user to supply a username and a password -->
+                <div class="form-group">
+                    <label for="name"> Username: </label>
+                    <input type="text" class="form-control" id="dname" name="username">
+                </div>
+
+                <!-- <div class="row"> -->
+                    <!-- <div class="col-6"> -->
+                        <div class="form-group">
+                            <!-- 4.a.ii -->
+                            <label for="vintage"> Password: </label>
+                            <input type="text" class="form-control" id="ctime" name="password">
+                        </div>
+        
+                    </div>
+                    <!-- <div class="col-6">
+                        <div class="form-group">
+                            <label for="price"> Prep Time: </label>
+                            <input type="number" class="form-control w-50" id="ptime" name="ptime">
+                        </div> -->
+        
+                    </div>
+                <!-- </div> -->
+
+
+                <!-- 4.a.iii 
+                The login page should also contain a signup button. 
+                Clicking on it navigates the user to a signup page -->
+                <button type="submit" class="mt-3 btn btn-secondary">Signup</button>
+            </form>                
+
+
+        </div>
+    </div>
+
+</div>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+        <h1>Invalid login</h1>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

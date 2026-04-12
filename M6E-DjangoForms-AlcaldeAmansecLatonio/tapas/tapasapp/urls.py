@@ -18,8 +18,9 @@ from . import views
 
 urlpatterns = [
     # 4.a.i Loads at localhost:8000/
-    path('', views.add_menu, name='add_menu'),
+    path('', views.login, name='login'),
     # path(‘pattern_name/<param_type: name_of_param>’, views.function, name=’reference_name’)
+    path('signup/', views.sign_up, name='sign_up'),
 
     path('better_menu', views.better_menu, name='better_menu'),
     path('view_detail/<int:pk>/', views.view_detail, name='view_detail'),
