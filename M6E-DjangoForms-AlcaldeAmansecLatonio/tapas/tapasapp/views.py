@@ -24,9 +24,6 @@ def better_menu(request):
     account_info = Account.objects.all()
     return render(request, 'tapasapp/better_list.html', {'account_info':account_info})
 
-    '''dish_objects = Dish.objects.all()
-    return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})'''
-
 # Creating Data Records (Code Perspective)
 def login(request):
     if(request.method=="POST"):
@@ -40,10 +37,23 @@ def login(request):
         if account != None and password == account.password:
             return redirect('better_menu')
         else:
-            return redirect('error_page')
+            messages.error(request, 'Invalid Login')
+            return render(request, 'tapasapp/login_page.html')
 
     else:
         return render(request, 'tapasapp/login_page.html')
+
+def sign_up(request):
+    if(request.method=="POST"):
+        username = request.POST.get('username') 
+        password = request.POST.get('password')
+
+        account = Account.objects.filter(username=username).first()
+
+
+
+    else:
+        return render(request, 'tapasapp/sign_up_page.html')
 
 def view_detail(request, pk):
     d = get_object_or_404(Dish, pk=pk)
@@ -62,6 +72,3 @@ def update_dish(request, pk):
     else:
         d = get_object_or_404(Dish, pk=pk)
         return render(request, 'tapasapp/update_menu.html', {'d':d})
-
-def error_page(request):
-    return render(request, 'tapasapp/error_page.html')
