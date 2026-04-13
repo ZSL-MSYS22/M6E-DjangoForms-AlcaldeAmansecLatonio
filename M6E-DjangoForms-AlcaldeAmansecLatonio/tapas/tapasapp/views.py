@@ -81,7 +81,6 @@ def change_password(request,pk):
         if currentPassword == account.password:
             if newPassword == newPasswordAgain:
                 Account.objects.filter(pk=pk).update(password=newPassword)
-                # Dish.objects.filter(pk=pk).update(cook_time=cooktime,prep_time=preptime)
                 return redirect('manage_account', pk=pk)
             else:
                 messages.error(request, 'New passwords do not match')

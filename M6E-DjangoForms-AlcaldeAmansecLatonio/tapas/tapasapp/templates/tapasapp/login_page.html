@@ -35,29 +35,17 @@ comments of our program.-->
                     <input type="text" class="form-control" id="dname" name="username">
                 </div>
 
-                <!-- <div class="row"> -->
-                    <!-- <div class="col-6"> -->
-                        <div class="form-group">
-                            <!-- 4.a.ii -->
-                            <label for="vintage"> Password: </label>
-                            <input type="text" class="form-control" id="ctime" name="password">
-                        </div>
-        
-                    </div>
-                    <!-- <div class="col-6">
-                        <div class="form-group">
-                            <label for="price"> Prep Time: </label>
-                            <input type="number" class="form-control w-50" id="ptime" name="ptime">
-                        </div> -->
-        
-                    </div>
-                <!-- </div> -->
-
+                <div class="form-group">
+                    <!-- 4.a.ii -->
+                    <label for="vintage"> Password: </label>
+                    <input type="text" class="form-control" id="ctime" name="password">
+                </div>
 
                 <!-- 4.a.iii 
                 The login page should also contain a signup button. 
                 Clicking on it navigates the user to a signup page -->
                 <button type="submit" class="mt-3 btn btn-secondary">Login</button>
+            
             </form>                
 
 
@@ -67,12 +55,9 @@ comments of our program.-->
 </div>
 
 {% if messages %}
-<ul class="messages">
     {% for message in messages %}
-        <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
         <h1>Invalid Login</h1>
     {% endfor %}
-</ul>
 {% endif %}
 
 {% endblock %}
