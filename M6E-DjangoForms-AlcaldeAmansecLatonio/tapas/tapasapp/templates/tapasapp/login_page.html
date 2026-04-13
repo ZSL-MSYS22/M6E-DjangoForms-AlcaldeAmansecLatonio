@@ -54,10 +54,6 @@ comments of our program.-->
 
 </div>
 
-{% if messages %}
-    {% for message in messages %}
-        <h1>{{messsage}}</h1>
-    {% endfor %}
-{% endif %}
-
-{% endblock %}
+<h1>{{ message }}</h1>
+    
+{%endblock%}

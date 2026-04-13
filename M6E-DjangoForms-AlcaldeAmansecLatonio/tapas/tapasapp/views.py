@@ -20,40 +20,50 @@ from django.contrib import messages
 # Create your views here.
 
 # Creating Data Records (Code Perspective)
+
 def login(request):
+
     if(request.method=="POST"):
         username = request.POST.get('username') 
         password = request.POST.get('password')
-
-        account = Account.objects.filter(username=username).first()
+        
+        if username=="" or password=="":
+            loginMessage = 'Please input username and password.'
+            # https://docs.djangoproject.com/en/6.0/ref/contrib/messages/
+            return render(request, 'tapasapp/login_page.html', {'message':loginMessage})
+        
+        account = Account.objects.filter(username=username).first()        
         # Returns the first object matched by the queryset, or None if there is no matching object
         # https://docs.djangoproject.com/en/6.0/ref/models/querysets/
-        
+
         if account != None and password == account.password:
             return redirect('basic_list', pk=account.pk)
             # https://www.geeksforgeeks.org/python/django-return-redirect-with-parameters/
         else:
-            messages.error(request, 'Invalid Login')
+            loginMessage = 'Invalid Login'
             # https://docs.djangoproject.com/en/6.0/ref/contrib/messages/
-            return render(request, 'tapasapp/login_page.html')
+            return render(request, 'tapasapp/login_page.html', {'message':loginMessage})
 
     else:
         return render(request, 'tapasapp/login_page.html')
 
+
 def sign_up(request):
+    global signUpMessage
+
     if(request.method=="POST"):
         username = request.POST.get('username') 
         password = request.POST.get('password')
 
         if not username or not password:
-            messages.error(request, 'Please enter a username and password')
-            return render(request, 'tapasapp/sign_up_page.html')
+            signUpMessage = 'Please enter a username and password'
+            return render(request, 'tapasapp/sign_up_page.html', {'message':signUpMessage})
     
         account = Account.objects.filter(username=username).first()
 
         if account != None:
-            messages.error(request, 'Account already exists')
-            return render(request, 'tapasapp/sign_up_page.html')
+            signUpMessage = 'Account already exists'
+            return render(request, 'tapasapp/sign_up_page.html', {'message':signUpMessage})
         else:
             Account.objects.create(username=username, password=password)
             return redirect('login')
@@ -63,11 +73,11 @@ def sign_up(request):
 
 def basic_list(request, pk):
     account = Account.objects.get(pk=pk)
-    return render(request, 'tapasapp/basic_list.html', {'account':account})
+    return render(request, 'tapasapp/basic_list.html', {'pk':pk, 'account':account})
 
 def manage_account(request, pk):
     account = Account.objects.get(pk=pk)
-    return render(request, 'tapasapp/manage_account.html', {'account':account})
+    return render(request, 'tapasapp/manage_account.html', {'pk':pk, 'account':account})
 
 def delete_account(request, pk):
     Account.objects.get(pk=pk).delete()
@@ -87,9 +97,11 @@ def change_password(request,pk):
                 Account.objects.filter(pk=pk).update(password=newPassword)
                 return redirect('manage_account', pk=pk)
             else:
-                messages.error(request, 'New passwords do not match')
+                changePasswordMessage = 'New passwords do not match'
+                return render(request, 'tapasapp/change_password.html', {'pk':pk}, {'message':changePasswordMessage})
         else:
-            messages.error(request, 'Incorrect Current Password')
+            changePasswordMessage = 'Incorrect current password'
+            return render(request, 'tapasapp/change_password.html', {'pk':pk}, {'message':changePasswordMessage})
 
     else:
         return render(request, 'tapasapp/change_password.html', {'pk':pk})
