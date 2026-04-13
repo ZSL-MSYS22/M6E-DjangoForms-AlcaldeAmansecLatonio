@@ -77,7 +77,6 @@ def delete_account(request, pk):
     Account.objects.get(pk=pk).delete()
     return redirect('login')
 
-# WIP
 def change_password(request,pk):
     if(request.method=='POST'):
         currentPassword = request.POST.get('currentPassword')
